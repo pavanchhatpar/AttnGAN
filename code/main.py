@@ -29,12 +29,12 @@ def parse_args():
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=-1)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed')
-    parser.add_argument('--lsi', dest='lsi', choices=['prep', 'use'], required=None, default=None)
+    parser.add_argument('--exp', dest='exp', choices=['lsi', 'color'], required=None, default=None)
     args = parser.parse_args()
     return args
 
 
-def gen_example(wordtoix, algo, prep=False, use=False):
+def gen_example(wordtoix, algo, lsi=False, color=False):
     '''generate images from example sentences'''
     from nltk.tokenize import RegexpTokenizer
     filepath = '%s/example_filenames.txt' % (cfg.DATA_DIR)
@@ -81,14 +81,12 @@ def gen_example(wordtoix, algo, prep=False, use=False):
                 cap_array[i, :c_len] = cap
             key = name[(name.rfind('/') + 1):]
             data_dic[key] = [cap_array, cap_lens, sorted_indices]
-    if not prep and not use:
+    if not lsi and not color:
         algo.gen_example(data_dic)
-    elif prep:
+    elif lsi:
         noise = []
-        noise.append(np.zeros(cfg.GAN.Z_DIM, dtype=np.float32))
-        noise.append(np.ones(cfg.GAN.Z_DIM, dtype=np.float32))
         rands = np.random.randn(2, cfg.GAN.Z_DIM).astype(np.float32)
-        inters = interpolate_points(rands[0], rands[1], n_steps=10)
+        inters = interpolate_points(rands[0], rands[1], n_steps=8)
         noise.append(rands[0])
         noise.extend(inters)
         noise.append(rands[1])
@@ -96,7 +94,7 @@ def gen_example(wordtoix, algo, prep=False, use=False):
 
 
 # uniform interpolation between two points in latent space
-def interpolate_points(p1, p2, n_steps=10):
+def interpolate_points(p1, p2, n_steps=8):
 	# interpolate ratios between the points
 	ratios = np.linspace(0, 1, num=n_steps)
 	# linear interpolate vectors
@@ -169,8 +167,8 @@ if __name__ == "__main__":
         else:
             if args.lsi is None:
                 gen_example(dataset.wordtoix, algo)  # generate images for customized captions
-            elif args.lsi == 'prep':
-                gen_example(dataset.wordtoix, algo, prep=True)
+            elif args.lsi == 'lsi':
+                gen_example(dataset.wordtoix, algo, lsi=True)
 
     end_t = time.time()
     print('Total time for training:', end_t - start_t)
