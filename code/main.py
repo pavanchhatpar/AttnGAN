@@ -85,8 +85,8 @@ def gen_example(wordtoix, algo, prep=False, use=False):
         algo.gen_example(data_dic)
     elif prep:
         noise = []
-        noise.append(np.zeros(cfg.GAN.Z_DIM))
-        noise.append(np.ones(cfg.GAN.Z_DIM))
+        noise.append(np.zeros(cfg.GAN.Z_DIM, dtype=np.float32))
+        noise.append(np.ones(cfg.GAN.Z_DIM, dtype=np.float32))
         rands = np.random.randn(2, cfg.GAN.Z_DIM)
         inters = interpolate_points(rands[0], rands[1], n_steps=10)
         noise.append(rands[0])
