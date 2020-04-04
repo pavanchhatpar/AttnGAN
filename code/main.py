@@ -84,7 +84,27 @@ def gen_example(wordtoix, algo, prep=False, use=False):
     if not prep and not use:
         algo.gen_example(data_dic)
     elif prep:
-        print(data_dic)
+        noise = []
+        noise.append(np.zeros(cfg.GAN.Z_DIM))
+        noise.append(np.ones(cfg.GAN.Z_DIM))
+        rands = np.random.randn(2, cfg.GAN.Z_DIM)
+        inters = interpolate_points(rands[0], rands[1], n_steps=10)
+        noise.append(rands[0])
+        noise.extend(inters)
+        noise.append(rands[1])
+        algo.gen_example(data_dic, noises=noise)
+
+
+# uniform interpolation between two points in latent space
+def interpolate_points(p1, p2, n_steps=10):
+	# interpolate ratios between the points
+	ratios = np.linspace(0, 1, num=n_steps)
+	# linear interpolate vectors
+	vectors = list()
+	for ratio in ratios:
+		v = (1.0 - ratio) * p1 + ratio * p2
+		vectors.append(v)
+	return vectors
 
 
 if __name__ == "__main__":
