@@ -530,6 +530,7 @@ class condGANTrainer(object):
                         # (2) Generate fake images
                         ######################################################
                         for zi, noise in enumerate(noises):
+                            noise = np.repeat([noise], batch_size)
                             noise = Variable(torch.from_numpy(noise))
                             noise = noise.cuda()
                             fake_imgs, attention_maps, _, _ = netG(noise, sent_emb, words_embs, mask)
