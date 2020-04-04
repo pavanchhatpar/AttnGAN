@@ -168,10 +168,12 @@ if __name__ == "__main__":
         if cfg.B_VALIDATION:
             algo.sampling(split_dir)  # generate images for the whole valid dataset
         else:
-            if args.lsi is None:
+            if args.exp is None:
                 gen_example(dataset.wordtoix, algo)  # generate images for customized captions
-            elif args.lsi == 'lsi':
+            elif args.exp == 'lsi':
                 gen_example(dataset.wordtoix, algo, lsi=True)
+            elif args.exp == 'color':
+                gen_example(dataset.wordtoix, algo, color=True)
 
     end_t = time.time()
     print('Total time for training:', end_t - start_t)
