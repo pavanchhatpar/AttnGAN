@@ -4,7 +4,7 @@ if [ ! -f "./.env" ]; then
     echo "export BIRDSMETA=\"./drive/My Drive/Spring 20/Spec. AI/birds.zip\""
     echo "export DAMSMBIRD=\"./drive/My Drive/Spring 20/Spec. AI/bird.zip\""
     echo "export GANBIRD=\"./drive/My Drive/Spring 20/Spec. AI/bird_AttnGAN2.pth\""
-    exit(2)
+    exit 2
 
 pip install python-dateutil easydict pandas torchfile nltk scikit-image
 pip install http://download.pytorch.org/whl/cu90/torch-0.3.1-cp27-cp27mu-linux_x86_64.whl
