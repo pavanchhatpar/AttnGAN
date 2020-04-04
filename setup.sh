@@ -15,9 +15,9 @@ pip install python-dateutil easydict pandas torchfile nltk scikit-image
 pip install http://download.pytorch.org/whl/cu90/torch-0.3.1-cp27-cp27mu-linux_x86_64.whl
 pip install torchvision==0.2.1
 
-unzip $BIRDSMETA -d "./data"
-unzip $DAMSMBIRD -d "./DAMSMencoders"
-cp $GANBIRD "./models"
+unzip "$BIRDSMETA" -d "./data"
+unzip "$DAMSMBIRD" -d "./DAMSMencoders"
+cp "$GANBIRD" "./models"
 if [ ! -f "CUB_200_2011.tgz" ]; then
     wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -O CUB_200_2011.tgz
 fi
