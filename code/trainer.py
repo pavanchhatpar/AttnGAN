@@ -531,7 +531,7 @@ class condGANTrainer(object):
                         # (2) Generate fake images
                         ######################################################
                         for zi, noise in enumerate(noises):
-                            noise = np.repeat([noise], batch_size)
+                            noise = np.repeat([noise], batch_size, axis=0)
                             noise = Variable(torch.from_numpy(noise), volatile=True)
                             noise = noise.cuda()
                             print(noise.data.shape)
