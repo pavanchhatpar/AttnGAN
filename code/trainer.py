@@ -485,6 +485,7 @@ class condGANTrainer(object):
                         noise = Variable(torch.FloatTensor(batch_size, nz), volatile=True)
                         noise = noise.cuda()
                         noise.data.normal_(0, 1)
+                        print(noise.data.shape)
                         fake_imgs, attention_maps, _, _ = netG(noise, sent_emb, words_embs, mask)
                         # G attention
                         cap_lens_np = cap_lens.cpu().data.numpy()
@@ -531,8 +532,9 @@ class condGANTrainer(object):
                         ######################################################
                         for zi, noise in enumerate(noises):
                             noise = np.repeat([noise], batch_size)
-                            noise = Variable(torch.from_numpy(noise))
+                            noise = Variable(torch.from_numpy(noise), volatile=True)
                             noise = noise.cuda()
+                            print(noise.data.shape)
                             fake_imgs, attention_maps, _, _ = netG(noise, sent_emb, words_embs, mask)
                             # G attention
                             cap_lens_np = cap_lens.cpu().data.numpy()
