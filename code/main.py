@@ -91,6 +91,9 @@ def gen_example(wordtoix, algo, lsi=False, color=False):
         noise.extend(inters)
         noise.append(rands[1])
         algo.gen_example(data_dic, noises=noise)
+    elif color:
+        rands = np.random.randn(5, cfg.GAN.Z_DIM).astype(np.float32)
+        algo.gen_example(data_dic, noises=rands)
 
 
 # uniform interpolation between two points in latent space
