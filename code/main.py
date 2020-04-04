@@ -87,7 +87,7 @@ def gen_example(wordtoix, algo, prep=False, use=False):
         noise = []
         noise.append(np.zeros(cfg.GAN.Z_DIM, dtype=np.float32))
         noise.append(np.ones(cfg.GAN.Z_DIM, dtype=np.float32))
-        rands = np.random.randn(2, cfg.GAN.Z_DIM).as_type(np.float32)
+        rands = np.random.randn(2, cfg.GAN.Z_DIM).astype(np.float32)
         inters = interpolate_points(rands[0], rands[1], n_steps=10)
         noise.append(rands[0])
         noise.extend(inters)
@@ -102,7 +102,7 @@ def interpolate_points(p1, p2, n_steps=10):
 	# linear interpolate vectors
 	vectors = list()
 	for ratio in ratios:
-		v = ((1.0 - ratio) * p1 + ratio * p2).as_type(np.float32)
+		v = ((1.0 - ratio) * p1 + ratio * p2).astype(np.float32)
 		vectors.append(v)
 	return vectors
 
