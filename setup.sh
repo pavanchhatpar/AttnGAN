@@ -23,4 +23,5 @@ if [ ! -f "CUB_200_2011.tgz" ]; then
 fi
 tar xvzf CUB_200_2011.tgz -C ./data/birds
 rm CUB_200_2011.tgz
+!wget -O ./code/FreeMono.ttf https://github.com/opensourcedesign/fonts/raw/master/gnu-freefont_freemono/FreeMono.ttf
 echo "**********Environment ready************"
