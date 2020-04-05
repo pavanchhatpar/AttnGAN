@@ -86,10 +86,12 @@ def gen_example(wordtoix, algo, lsi=False, color=False):
     elif lsi:
         noise = []
         rands = np.random.randn(2, cfg.GAN.Z_DIM).astype(np.float32)
-        inters = interpolate_points(rands[0], rands[1], n_steps=8)
+        inters = interpolate_points(rands[0], rands[1], n_steps=3)
         noise.append(rands[0])
         noise.extend(inters)
         noise.append(rands[1])
+        arith = noise[2] - noise[0] + noise[-1]
+        noise.append(arith)
         algo.gen_example(data_dic, noises=noise)
     elif color:
         rands = np.random.randn(5, cfg.GAN.Z_DIM).astype(np.float32)
